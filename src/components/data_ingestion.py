@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 from src.exception import CustomException
 from src.logger import logging
+from src.components.data_transformation import DataTransformation,DataTransfomerConfig
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
@@ -39,12 +40,18 @@ class DataIngestion:
             test.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
 
             logging.info("Ingestion of the data is completed")
+
+            return self.ingestion_config.train_data_path,self.ingestion_config.test_data_path
+        
         except Exception as e:
-            CustomException(e,sys)
+            raise CustomException(e,sys)
 
 if __name__=="__main__":
     obj=DataIngestion()    
-    obj.initiate_data_ingestion() 
+    train_dath_path,test_data_path=obj.initiate_data_ingestion()
+
+    dt_obj=DataTransformation()
+    train_arr,test_arr,_=dt_obj.initiate_data_transformation(train_dath_path,test_data_path)
             
     
          
