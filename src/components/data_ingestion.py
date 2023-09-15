@@ -5,6 +5,8 @@ from src.exception import CustomException
 from src.logger import logging
 from src.components.data_transformation import DataTransformation,DataTransfomerConfig
 
+from src.components.model_trainer import ModelTrainer,ModelTrainerConfig
+
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
@@ -52,6 +54,11 @@ if __name__=="__main__":
 
     dt_obj=DataTransformation()
     train_arr,test_arr,_=dt_obj.initiate_data_transformation(train_dath_path,test_data_path)
+
+    model=ModelTrainer()
+    print(model.initiate_model_training(train_arr=train_arr,test_arr=test_arr))
+
+
             
     
          
